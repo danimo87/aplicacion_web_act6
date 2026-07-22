@@ -1,0 +1,11 @@
+const fs = require('fs');
+const path = require('path');
+const sqlite3 = require('better-sqlite3');
+const file = path.resolve(__dirname, 'database.sqlite');
+console.log('database file:', file);
+console.log('exists:', fs.existsSync(file));
+if (!fs.existsSync(file)) process.exit(0);
+const db = sqlite3(file, { readonly: true });
+const rows = db.prepare("SELECT name, type, sql FROM sqlite_master WHERE type IN ('table','index') ORDER BY name").all();
+console.log(JSON.stringify(rows, null, 2));
+db.close();

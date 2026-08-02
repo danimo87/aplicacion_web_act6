@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend_app
+    container_name: nestjs_backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend_app:/app
+      - /app/node_modules
+    env_file:
+      - ./backend_app/.env
+    environment:
+      - NODE_ENV=development
